@@ -18,7 +18,6 @@ At inference, predictions from both models are merged.
 
 ## Installation
 
-# Install dependencies
 ```bash
 pip install transformers datasets numpy pandas
 ```
