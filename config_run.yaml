@@ -1,0 +1,44 @@
+# --- CONFIGURATION FOR TRAINING ---
+
+# 1. TRAIN GENERIC MODEL (Save as train_generic.yaml)
+data:
+  path: "./data/gsap_ner_processed" # Path to your HF dataset arrow files
+  unit: "paragraph"
+  n_folds: 1 # Just run 1 fold for now
+  tagset: "flat_base"
+  subset_mode: "generic" # <--- THIS IS KEY: Only Generic labels
+
+model:
+  base_model: "allenai/scibert_scivocab_uncased"
+  nickname: "scibert"
+  output_path: "./models" 
+  training_arguments:
+    num_train_epochs: 5
+    per_device_train_batch_size: 16
+    learning_rate: 2.0e-5
+    save_total_limit: 1
+    evaluation_strategy: "epoch"
+
+# 2. TRAIN NAMED MODEL (Save as train_named.yaml)
+# (Copy above and change subset_mode to "named")
+
+# --- CONFIGURATION FOR INFERENCE ---
+
+# 3. INFERENCE (Save as inference.yaml)
+input:
+  path: "./data/test_docs" # Raw JSON docs
+  limit: 100
+
+output:
+  path: "./output/final_predictions.json"
+  onefile: True
+
+models:
+  batch_size: 8
+  steps:
+    - name: "GenericModel"
+      path: "./models/scibert_generic/0" # Point to trained Generic model
+    - name: "NamedModel"
+      path: "./models/scibert_named/0"   # Point to trained Named model
+
+device: 0 # GPU ID or -1 for CPU
