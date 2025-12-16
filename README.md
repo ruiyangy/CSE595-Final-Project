@@ -19,18 +19,15 @@ At inference, predictions from both models are merged.
 ## Installation
 
 # Install dependencies
+```bash
 pip install transformers datasets numpy pandas
 ```
 
-## Usage
 
 ### Training
 
 ```bash
-# Train Generic model
-python train.py
-
-# Train Named model  
+# Train model  
 python train.py
 ```
 
