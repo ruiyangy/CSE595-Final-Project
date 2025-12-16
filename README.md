@@ -26,14 +26,13 @@ pip install transformers datasets numpy pandas
 ### Training
 
 ```bash
-# Train model  
 python train.py
 ```
 
 ### Inference
 
 ```bash
-python inference.py config_inference.yaml
+python inference.py
 ```
 
 ## Dataset
